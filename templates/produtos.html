@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Produtos | Controle de Estoque{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3>Produtos</h3>
+  {% if session.get('perfil') == 'admin' %}<a class="btn btn-primary" href="{{ url_for('produto_novo') }}">Novo produto</a>{% endif %}
+</div>
+<div class="card">
+  <table class="table mb-0 align-middle">
+    <thead><tr><th>Nome</th><th>Categoria</th><th>Quantidade</th><th>Mínimo</th><th>Preço (R$)</th>{% if session.get('perfil') == 'admin' %}<th></th>{% endif %}</tr></thead>
+    <tbody>
+    {% for p in produtos %}
+      <tr class="{{ 'table-danger' if p.id in alertas_ids }}">
+        <td>{{ p.nome }}</td><td>{{ p.categoria or '-' }}</td><td>{{ p.quantidade }}</td><td>{{ p.qtd_minima }}</td>
+        <td>{{ '%.2f'|format(p.preco) }}</td>
+        {% if session.get('perfil') == 'admin' %}
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('produto_editar', pid=p.id) }}">Editar</a>
+          <form method="post" action="{{ url_for('produto_deletar', pid=p.id) }}" class="d-inline"
+                onsubmit="return confirm('Remover este produto?');">
+            <button class="btn btn-sm btn-outline-danger">Remover</button>
+          </form>
+        </td>
+        {% endif %}
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="text-muted">Nenhum produto cadastrado.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

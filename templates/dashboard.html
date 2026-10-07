@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Painel | Controle de Estoque{% endblock %}
+{% block content %}
+<h3 class="mb-4">Painel</h3>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card"><div class="card-body">
+    <div class="text-muted small">Produtos cadastrados</div><div class="fs-3 fw-bold">{{ total_produtos }}</div></div></div></div>
+  <div class="col-md-4"><div class="card"><div class="card-body">
+    <div class="text-muted small">Itens em estoque</div><div class="fs-3 fw-bold">{{ total_itens }}</div></div></div></div>
+  <div class="col-md-4"><div class="card"><div class="card-body">
+    <div class="text-muted small">Abaixo do mínimo</div><div class="fs-3 fw-bold text-danger">{{ alertas|length }}</div></div></div></div>
+</div>
+{% if alertas %}
+<div class="card mb-4"><div class="card-header">Produtos abaixo do estoque mínimo</div>
+  <ul class="list-group list-group-flush">
+  {% for p in alertas %}
+    <li class="list-group-item d-flex justify-content-between">{{ p.nome }}
+      <span class="text-danger">{{ p.quantidade }} / mínimo {{ p.qtd_minima }}</span></li>
+  {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="card"><div class="card-header">Últimas movimentações</div>
+  <table class="table mb-0">
+    <thead><tr><th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd.</th><th>Usuário</th></tr></thead>
+    <tbody>
+    {% for m in movimentacoes %}
+      <tr><td>{{ m.data_hora }}</td><td>{{ m.produto }}</td><td>{{ m.tipo|capitalize }}</td><td>{{ m.quantidade }}</td><td>{{ m.usuario }}</td></tr>
+    {% else %}
+      <tr><td colspan="5" class="text-muted">Nenhuma movimentação registrada.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

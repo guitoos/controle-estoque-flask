@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar' if produto else 'Novo' }} produto | Controle de Estoque{% endblock %}
+{% block content %}
+<h3 class="mb-4">{{ 'Editar produto' if produto else 'Novo produto' }}</h3>
+<div class="card"><div class="card-body">
+<form method="post">
+  <div class="row g-3">
+    <div class="col-md-6"><label class="form-label" for="nome">Nome</label>
+      <input class="form-control" id="nome" name="nome" value="{{ form.get('nome', '') }}"></div>
+    <div class="col-md-6"><label class="form-label" for="categoria">Categoria</label>
+      <input class="form-control" id="categoria" name="categoria" value="{{ form.get('categoria', '') or '' }}"></div>
+    <div class="col-md-4"><label class="form-label" for="quantidade">Quantidade</label>
+      <input class="form-control" id="quantidade" name="quantidade" value="{{ form.get('quantidade', '') }}"></div>
+    <div class="col-md-4"><label class="form-label" for="qtd_minima">Quantidade mínima</label>
+      <input class="form-control" id="qtd_minima" name="qtd_minima" value="{{ form.get('qtd_minima', '') }}"></div>
+    <div class="col-md-4"><label class="form-label" for="preco">Preço (R$)</label>
+      <input class="form-control" id="preco" name="preco" value="{{ form.get('preco', '') }}"></div>
+  </div>
+  <div class="mt-4">
+    <button class="btn btn-primary">Salvar</button>
+    <a class="btn btn-link" href="{{ url_for('produtos') }}">Cancelar</a>
+  </div>
+</form>
+</div></div>
+{% endblock %}

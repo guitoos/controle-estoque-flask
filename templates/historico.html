@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Histórico | Controle de Estoque{% endblock %}
+{% block content %}
+<h3 class="mb-4">Histórico de movimentações</h3>
+<div class="card">
+  <table class="table mb-0">
+    <thead><tr><th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd.</th><th>Usuário</th><th>Observação</th></tr></thead>
+    <tbody>
+    {% for m in movimentacoes %}
+      <tr><td>{{ m.data_hora }}</td><td>{{ m.produto }}</td>
+        <td><span class="badge {{ 'bg-success' if m.tipo == 'entrada' else 'bg-danger' }}">{{ m.tipo|capitalize }}</span></td>
+        <td>{{ m.quantidade }}</td><td>{{ m.usuario }}</td><td>{{ m.observacao or '-' }}</td></tr>
+    {% else %}
+      <tr><td colspan="6" class="text-muted">Nenhuma movimentação registrada.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

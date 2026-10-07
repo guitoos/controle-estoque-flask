@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Novo usuário | Controle de Estoque{% endblock %}
+{% block content %}
+<h3 class="mb-4">Novo usuário</h3>
+<div class="card"><div class="card-body">
+<form method="post">
+  <div class="row g-3">
+    <div class="col-md-6"><label class="form-label" for="nome">Nome</label>
+      <input class="form-control" id="nome" name="nome" value="{{ form.get('nome', '') }}"></div>
+    <div class="col-md-6"><label class="form-label" for="login">Login</label>
+      <input class="form-control" id="login" name="login" value="{{ form.get('login', '') }}"></div>
+    <div class="col-md-6"><label class="form-label" for="senha">Senha</label>
+      <input class="form-control" id="senha" name="senha" type="password"></div>
+    <div class="col-md-6"><label class="form-label" for="perfil">Perfil</label>
+      <select class="form-select" id="perfil" name="perfil">
+        <option value="comum" {{ 'selected' if form.get('perfil') != 'admin' }}>Comum</option>
+        <option value="admin" {{ 'selected' if form.get('perfil') == 'admin' }}>Administrador</option>
+      </select></div>
+  </div>
+  <div class="mt-4">
+    <button class="btn btn-primary">Criar</button>
+    <a class="btn btn-link" href="{{ url_for('usuarios') }}">Cancelar</a>
+  </div>
+</form>
+</div></div>
+{% endblock %}

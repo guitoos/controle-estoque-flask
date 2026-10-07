@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Entrada / Saída | Controle de Estoque{% endblock %}
+{% block content %}
+<h3 class="mb-4">Registrar entrada ou saída</h3>
+<div class="card"><div class="card-body">
+<form method="post">
+  <div class="row g-3">
+    <div class="col-md-6"><label class="form-label" for="produto_id">Produto</label>
+      <select class="form-select" id="produto_id" name="produto_id">
+        <option value="">Selecione...</option>
+        {% for p in produtos %}<option value="{{ p.id }}">{{ p.nome }} (saldo: {{ p.quantidade }})</option>{% endfor %}
+      </select></div>
+    <div class="col-md-3"><label class="form-label" for="tipo">Tipo</label>
+      <select class="form-select" id="tipo" name="tipo">
+        <option value="entrada">Entrada</option><option value="saida">Saída</option>
+      </select></div>
+    <div class="col-md-3"><label class="form-label" for="quantidade">Quantidade</label>
+      <input class="form-control" id="quantidade" name="quantidade"></div>
+    <div class="col-12"><label class="form-label" for="observacao">Observação</label>
+      <input class="form-control" id="observacao" name="observacao"></div>
+  </div>
+  <button class="btn btn-primary mt-4">Registrar</button>
+</form>
+</div></div>
+{% endblock %}
