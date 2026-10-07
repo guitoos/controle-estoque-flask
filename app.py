@@ -1,8 +1,9 @@
 # ============================================================
 # app.py — Aplicação principal Flask
 # Sistema de Controle de Estoque
-# Aluno: Guilherme Oliveira Silva Santos | RA: 143422
 # ============================================================
+
+import os
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from models.database import init_db
@@ -14,7 +15,7 @@ from models.produto import (
 from models.movimentacao import registrar_movimentacao, listar_movimentacoes
 
 app = Flask(__name__)
-app.secret_key = 'chave_secreta_estoque_2025'
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-only-change-me')
 
 
 with app.app_context():
@@ -245,4 +246,4 @@ def usuario_novo():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=os.environ.get('FLASK_DEBUG') == '1', port=5000)

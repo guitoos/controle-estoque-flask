@@ -1,53 +1,64 @@
-# Sistema de Controle de Estoque
-**Aluno:** Guilherme Oliveira Silva Santos | **RA:** 143422
-**Disciplina:** Development with Python | **UniFECAF**
+# Controle de Estoque
 
-## Como Executar
+Aplicação web em Flask para controle de estoque, com autenticação, perfis de acesso, cadastro de produtos, registro de entradas e saídas e alertas de estoque mínimo.
 
-1. Instale as dependencias:
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. Execute a aplicacao:
-   ```
-   python app.py
-   ```
-
-3. Acesse no navegador: `http://localhost:5000`
-
-## Login Padrao
-- **Login:** admin
-- **Senha:** admin123
-
-## Estrutura do Projeto
-```
-estoque_app/
-├── app.py              # Aplicacao principal Flask
-├── requirements.txt    # Dependencias Python
-├── estoque.db          # Banco de dados SQLite (criado automaticamente)
-├── models/
-│   ├── database.py     # Conexao e inicializacao do banco
-│   ├── usuario.py      # Operacoes de usuarios
-│   ├── produto.py      # Operacoes de produtos
-│   └── movimentacao.py # Registro de movimentacoes
-└── templates/
-    ├── base.html        # Layout base com menu lateral
-    ├── login.html       # Tela de login
-    ├── dashboard.html   # Painel principal
-    ├── produtos.html    # Listagem de produtos
-    ├── produto_form.html # Formulario cadastro/edicao
-    ├── movimentacao.html # Registro entrada/saida
-    ├── historico.html   # Historico de movimentacoes
-    ├── usuarios.html    # Listagem de usuarios
-    └── usuario_form.html # Formulario novo usuario
+Projeto desenvolvido na disciplina Development with Python, do curso de Análise e Desenvolvimento de Sistemas da UniFECAF.
 
 ## Funcionalidades
-- Login e sessao de usuario
-- Perfis: Administrador e Comum
-- Senha criptografada com hash (werkzeug)
+
+- Login com senha armazenada em hash (Werkzeug)
+- Perfis Administrador e Comum, com rotas restritas por perfil
 - CRUD completo de produtos
-- Registro de entrada e saida de estoque
-- Alertas de estoque abaixo do minimo
-- Historico de movimentacoes
-- Validacoes de campos numericos
+- Registro de entradas e saídas, com bloqueio de saída acima do saldo
+- Alerta de produtos abaixo da quantidade mínima
+- Histórico de movimentações com usuário, data e observação
+- Painel com totais e últimas movimentações
+
+## Tecnologias
+
+- Python 3.10+
+- Flask
+- SQLite
+- Bootstrap 5
+
+## Como executar
+
+```bash
+git clone https://github.com/guitoos/controle-estoque-flask.git
+cd controle-estoque-flask
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+Acesse `http://localhost:5000`. O banco `estoque.db` é criado automaticamente no primeiro acesso.
+
+Usuário inicial: `admin`. A senha vem da variável de ambiente `ADMIN_PASSWORD` (padrão `admin123`, apenas para testes locais).
+
+## Variáveis de ambiente
+
+| Variável | Uso | Padrão |
+| --- | --- | --- |
+| `SECRET_KEY` | Chave de sessão do Flask | valor de desenvolvimento |
+| `ADMIN_PASSWORD` | Senha do administrador criado no primeiro acesso | `admin123` |
+| `ESTOQUE_DB` | Caminho do banco SQLite | `estoque.db` |
+| `FLASK_DEBUG` | `1` ativa o modo debug | desativado |
+
+## Estrutura
+
+```
+controle-estoque-flask/
+├── app.py                # Rotas e regras da aplicação
+├── requirements.txt
+├── models/
+│   ├── database.py       # Conexão e criação das tabelas
+│   ├── usuario.py        # Autenticação e usuários
+│   ├── produto.py        # Operações de produtos
+│   └── movimentacao.py   # Entradas, saídas e histórico
+└── templates/            # Páginas HTML (Jinja2 + Bootstrap)
+```
+
+## Autor
+
+Guilherme Oliveira · [LinkedIn](https://www.linkedin.com/in/guilhermeoss)
